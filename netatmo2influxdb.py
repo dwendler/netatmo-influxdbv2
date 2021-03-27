@@ -3,7 +3,7 @@
 
 from pytz import timezone
 import datetime
-from influxdb import InfluxDBClient
+from influxdb_client import InfluxDBClient
 import json
 import lnetatmo
 import os
@@ -23,13 +23,14 @@ netatmo_clientSecret=os.getenv('NETATMO_CLIENT_SECRET', "")
 netatmo_username=os.getenv('NETATMO_USERNAME')
 netatmo_password=os.getenv('NETATMO_PASSWORD')
 
-# influx env variables
+# influx v2 env variables
 
-influxdb_host=os.getenv('INFLUXDB_HOST', "localhost")
-influxdb_port=int(os.getenv('INFLUXDB_PORT', "8086"))
-influxdb_username=os.getenv('INFLUXDB_USERNAME', "root")
-influxdb_password=os.getenv('INFLUXDB_PASSWORD', "root")
-influxdb_database=os.getenv('INFLUXDB_DATABASE', "netatmo")
+influxdb2_host=os.getenv('INFLUXDB2_HOST', "localhost")
+influxdb2_port=int(os.getenv('INFLUXDB2_PORT', "8086"))
+influxdb2_org=os.getenv('INFLUXDB2_ORG', "org")
+influxdb2_token=os.getenv('INFLUXDB2_TOKEN', "token")
+influxdb2_bucket=os.getenv('INFLUXDB2_BUCKET', "netatmo")
+
 # Luftkvalitet (Norwegian Air Quality
 airLat=os.getenv('AIRQUALITY_LATITUDE', None)
 airLon=os.getenv('AIRQUALITY_LONGITUDE', None)
@@ -40,12 +41,11 @@ authorization = lnetatmo.ClientAuth(clientId=netatmo_clientId,
                                 username=netatmo_username,
                                 password=netatmo_password)
 devList = lnetatmo.WeatherStationData(authorization)
-# influxdb
-client = InfluxDBClient(influxdb_host,
-                     influxdb_port,
-                     influxdb_username,
-                     influxdb_password,
-                     influxdb_database)
+# influxdb v2
+influxdb2_url="http://" + influxdb2_host + ":" + influxdb2_port
+if debug:
+  print (influxdb2_url)
+client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_org)
 
 # these keys are float
 keylist=['Temperature', 'min_temp', 'max_temp', 'Pressure', 'AbsolutePressure', 'Rain', 'sum_rain_24', 'sum_rain_1']
