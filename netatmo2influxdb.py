@@ -17,14 +17,13 @@ if debug_str is not None:
 else:
   debug = False
 
-# settings from EnvionmentValue
+# netatmo envionment variables
 netatmo_clientId=os.getenv('NETATMO_CLIENT_ID', "")
 netatmo_clientSecret=os.getenv('NETATMO_CLIENT_SECRET', "")
 netatmo_username=os.getenv('NETATMO_USERNAME')
 netatmo_password=os.getenv('NETATMO_PASSWORD')
 
-# influx v2 env variables
-
+# influxDBv2 envionment variables
 influxdb2_host=os.getenv('INFLUXDB2_HOST', "localhost")
 influxdb2_port=int(os.getenv('INFLUXDB2_PORT', "8086"))
 influxdb2_org=os.getenv('INFLUXDB2_ORG', "org")
@@ -38,10 +37,11 @@ authorization = lnetatmo.ClientAuth(clientId=netatmo_clientId,
                                 password=netatmo_password)
 devList = lnetatmo.WeatherStationData(authorization)
 
-# influxdb v2
+# influxDBv2
 influxdb2_url="http://" + influxdb2_host + ":" + influxdb2_port
 if debug:
   print (influxdb2_url)
+
 client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_org)
 
 # these keys are float
