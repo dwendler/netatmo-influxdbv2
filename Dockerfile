@@ -1,5 +1,8 @@
 ARG ARCH=
 
+FROM arm32v7/debian:stretch-slim 
+COPY qemu-arm-static /usr/bin
+
 # Pull base image
 FROM ubuntu:latest
 
