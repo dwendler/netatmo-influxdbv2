@@ -12,11 +12,13 @@ Updated for InfluxDBv2.
 - Click "Save"
 - See your client id and client secret.
 
-## Create Influxdb v2 database
+## InfluxDBv2 Setup
 
-#### Create Org and Bucket
-
-#### Get Token
+Assumes the following is already done:
+- Setup InfluxDBv2
+- Create Org
+- Create Bucket
+- Got Token
 
 ## How to run
 ```
@@ -31,7 +33,7 @@ $ docker run -d \
  -e INFLUXDB2_TOKEN="" \
  -e INFLUXDB2_BUCKET="netatmo" \
  --name "netatmo-influxdb" \
-turbosnute/netatmo-influxdb:latest
+dbsqp/netatmo-influxdbv2:latest
 ```
 
 ## Debug
