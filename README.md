@@ -32,7 +32,7 @@ $ docker run -d \
  -e INFLUXDB2_ORG="" \
  -e INFLUXDB2_TOKEN="" \
  -e INFLUXDB2_BUCKET="netatmo" \
- --name "netatmo-influxdb" \
+ --name "netatmo-influxdbv2" \
 dbsqp/netatmo-influxdbv2:latest
 ```
 
