@@ -31,16 +31,13 @@ influxdb2_org=os.getenv('INFLUXDB2_ORG', "org")
 influxdb2_token=os.getenv('INFLUXDB2_TOKEN', "token")
 influxdb2_bucket=os.getenv('INFLUXDB2_BUCKET', "netatmo")
 
-# Luftkvalitet (Norwegian Air Quality
-airLat=os.getenv('AIRQUALITY_LATITUDE', None)
-airLon=os.getenv('AIRQUALITY_LONGITUDE', None)
-
 # netatmo
 authorization = lnetatmo.ClientAuth(clientId=netatmo_clientId,
                                 clientSecret=netatmo_clientSecret,
                                 username=netatmo_username,
                                 password=netatmo_password)
 devList = lnetatmo.WeatherStationData(authorization)
+
 # influxdb v2
 influxdb2_url="http://" + influxdb2_host + ":" + influxdb2_port
 if debug:
