@@ -4,7 +4,7 @@ ARG ARCH=
 FROM ubuntu:latest
 
 # Labels
-LABEL MAINTAINER="Øyvind Nilsen <oyvind.nilsen@gmail.com>"
+LABEL MAINTAINER="dbsqp@icloud.com"
 
 # Setup external package-sources
 RUN apt-get update && apt-get install -y \
