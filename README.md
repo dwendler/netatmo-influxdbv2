@@ -12,32 +12,12 @@ Updated for InfluxDBv2.
 - Click "Save"
 - See your client id and client secret.
 
-## Create Influxdb database
+## Create Influxdb v2 database
 
-### Run InfluxDB in Docker
-If you don't have a Influxdb server yet you can run one in Docker:
-```
-$ docker run -d -p 8086:8086 \
-      -v influxdb:/var/lib/influxdb \
-      influxdb
-```
+### Create Org and Bucket
 
-### Create Dabatase
-#### Curl method
-```
-$ curl -G http://<INFLUXDB_SERVER>:8086/query --data-urlencode "q=CREATE DATABASE netatmo"
-```
-#### Console Method
-```
- docker run -d -p 8086:8086 \
-      -v influxdb:/var/lib/influxdb \
-      influxdb /bin/bash
+#### Get Token
 
-Container#> influx
-> CREATE DATABASE netatmo
-> exit
-
-```
 ## How to run
 ```
 $ docker run -d \
@@ -45,11 +25,11 @@ $ docker run -d \
  -e NETATMO_CLIENT_SECRET="<NETATMO CLIENT SECRET>" \
  -e NETATMO_USERNAME="<NETATMO USERNAME>" \
  -e NETATMO_PASSWORD="<NETATMO PASSWORD>" \
- -e INFLUXDB_HOST="<INFLUXDB SERVER>" \
- -e INFLUXDB_PORT="8086" \
- -e INFLUXDB_USERNAME="" \
- -e INFLUXDB_PASSWORD="" \
- -e INFLUXDB_DATABASE="netatmo" \
+ -e INFLUXDB2_HOST="<INFLUXDBv2 SERVER>" \
+ -e INFLUXDB2_PORT="8086" \
+ -e INFLUXDB2_ORG="" \
+ -e INFLUXDB2_TOKEN="" \
+ -e INFLUXDB2_BUCKET="netatmo" \
  --name "netatmo-influxdb" \
 turbosnute/netatmo-influxdb:latest
 ```
@@ -58,11 +38,4 @@ turbosnute/netatmo-influxdb:latest
 To get more debug data add:
 ```
  -e DEBUG="true"
-```
-
-## Measure Air Quality (Norway Only)
-If you want to get data about air quality in your neighborhood from Norsk institutt for luftforskning (nilu.no). Add the following variables and change the coordinates to match your location:
-```
- -e AIRQUALITY_LATITUDE="63.426916" \
- -e AIRQUALITY_LONGITUDE="10.396859" \
 ```
