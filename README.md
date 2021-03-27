@@ -1,6 +1,8 @@
 # netatmo-influxdb
 Fetch data from the Netatmo API and place it in your influxdb. Based on Manabuishii's [docker-netatmo-influxdb-python](https://github.com/manabuishii/docker-netatmo-influxdb-python) and [netatmo2influxdb.py](https://pypi.org/project/netatmo2influxdb/).
 
+Updated for InfluxDBv2.
+
 ## How to obtain Netatmo API Token
 - Go to: https://dev.netatmo.com/
 - Log in.
