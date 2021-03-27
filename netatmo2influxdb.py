@@ -52,6 +52,7 @@ keylist=['Temperature', 'min_temp', 'max_temp', 'Pressure', 'AbsolutePressure', 
 
 def send_data(ds):
     #
+    write_api = client.write_api()
     senddata={}
     dd=ds['dashboard_data']
     for key in dd:
@@ -67,7 +68,7 @@ def send_data(ds):
         senddata["fields"]["value"]=dd[key]
         if debug:
              print (json.dumps(senddata,indent=4))
-        client.write_points([senddata])
+        write_api.write(influxdb2_bucket, influxdb2_org, [senddata])
 
 for name in devList.modulesNamesList():
     if debug:
@@ -98,34 +99,3 @@ for station_id in devList.stations:
             print (station_id)
         print (ds['_id'])
     send_data(ds)
-
-#
-# Air Quality (Norway)
-#
-if airLat is not None and airLon is not None:
-  airUri = f"https://api.nilu.no/aq/utd/{airLat}/{airLon}/3"
-  response = requests.get(airUri)
-
-  if response.status_code == 200:
-    for airdata in response.json():
-       station = airdata['station']
-       component = airdata['component']
-       airvalue = airdata['value']
-       output = [
-       {
-          "measurement": "airquality",
-          "tags": {
-              "station": station,
-              "component": component
-          },
-          "fields": {
-              "value": airvalue
-          }
-       }
-       ]
-       if debug:
-         print(output)
-
-       client.write_points(output)
-  else:
-       print("error getting air quality")
