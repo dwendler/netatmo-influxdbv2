@@ -70,6 +70,7 @@ def send_data(ds):
         if debug:
             print (senddata["time"])
         senddata["tags"]={}
+        senddata["tags"]["source"]="Netatmo"
         senddata["tags"]["host"]=ds['module_name']
         senddata["tags"]["module"]=ds['_id']
         senddata["fields"]={}
