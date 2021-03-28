@@ -3,7 +3,8 @@
 
 from pytz import timezone
 import datetime
-from influxdb_client import InfluxDBClient
+from influxdb_client import InfluxDBClient, Point, WriteOptions
+from influxdb_client.client.write_api import SYNCHRONOUS
 import json
 import lnetatmo
 import os
@@ -48,25 +49,25 @@ client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_
 keylist=['Temperature', 'min_temp', 'max_temp', 'Pressure', 'AbsolutePressure', 'Rain', 'sum_rain_24', 'sum_rain_1']
 
 def send_data(ds):
-    #
-    write_api = client.write_api()
+    write_api = client.write_api(write_options=SYNCHRONOUS)
+    
     senddata={}
     dd=ds['dashboard_data']
     for key in dd:
+        if key in keylist:
+            dd[key]=float(dd[key])
         senddata["measurement"]=key
         senddata["time"]=datetime.datetime.fromtimestamp(dd['time_utc']).strftime("%Y-%m-%dT%H:%M:%S")
         if debug:
             print (senddata["time"])
         senddata["tags"]={}
-        senddata["tags"]["host"]=ds['_id']
-        senddata["tags"]["module"]=ds['module_name']
-        if key in keylist:
-            dd[key]=float(dd[key])
+        senddata["tags"]["host"]=ds['module_name']
+        senddata["tags"]["module"]=ds['_id']
         senddata["fields"]={}
         senddata["fields"]["value"]=dd[key]
         if debug:
              print (json.dumps(senddata,indent=4))
-        write_api.write(influxdb2_bucket, influxdb2_org, [senddata])
+        write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
 
 for name in devList.modulesNamesList():
     if debug:
