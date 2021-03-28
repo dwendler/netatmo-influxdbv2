@@ -48,6 +48,9 @@ client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_
 # these keys are float
 keylist=['Temperature', 'min_temp', 'max_temp', 'Pressure', 'AbsolutePressure', 'Rain', 'sum_rain_24', 'sum_rain_1']
 
+# these keys are skipped
+skiplist=['temp_trend', 'pressure_trend', 'date_min_temp', 'date_max_temp', 'max_temp', 'min_temp', 'AbsolutePressure', 'time_utc']
+
 def send_data(ds):
     write_api = client.write_api(write_options=SYNCHRONOUS)
     
@@ -56,6 +59,12 @@ def send_data(ds):
     for key in dd:
         if key in keylist:
             dd[key]=float(dd[key])
+            
+        if key in skiplist:
+            if debug:
+                print ( "Skipped "+key )
+            continue
+   
         senddata["measurement"]=key
         senddata["time"]=datetime.datetime.fromtimestamp(dd['time_utc']).strftime("%Y-%m-%dT%H:%M:%S")
         if debug:
