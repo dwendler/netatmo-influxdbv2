@@ -39,7 +39,7 @@ authorization = lnetatmo.ClientAuth(clientId=netatmo_clientId,
 devList = lnetatmo.WeatherStationData(authorization)
 
 # influxDBv2
-influxdb2_url="http://" + influxdb2_host + ":" + influxdb2_port
+influxdb2_url="http://" + influxdb2_host + ":" + str(influxdb2_port)
 if debug:
   print (influxdb2_url)
 
