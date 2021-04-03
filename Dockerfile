@@ -4,7 +4,7 @@ ARG ARCH=
 FROM ubuntu:latest
 
 # Labels
-LABEL MAINTAINER="Matt Parkinson <dbsqp@icloud.com>"
+LABEL MAINTAINER="https://github.com/dbsqp/"
 
 # Setup external package-sources
 RUN apt-get update && apt-get install -y \
