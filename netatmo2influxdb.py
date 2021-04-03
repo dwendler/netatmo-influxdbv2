@@ -13,11 +13,12 @@ import requests
 
 
 # debug enviroment varable
+showraw = False
 debug_str=os.getenv("DEBUG", None)
 if debug_str is not None:
-  debug = debug_str.lower() == "true"
+    debug = debug_str.lower() == "true"
 else:
-  debug = False
+    debug = False
 
 
 # netatmo envionment variables
@@ -54,6 +55,7 @@ devList = lnetatmo.WeatherStationData(authorization)
 influxdb2_url="http://" + influxdb2_host + ":" + str(influxdb2_port)
 if debug:
     print ( "influx: "+influxdb2_url )
+    print ( "bucket: "+influxdb2_bucket )
 
 client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_org)
 
@@ -62,22 +64,59 @@ client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_
 keylist=['Temperature', 'min_temp', 'max_temp', 'Pressure', 'AbsolutePressure', 'Rain', 'sum_rain_24', 'sum_rain_1']
 
 # these keys are skipped
-skiplist=['temp_trend', 'pressure_trend', 'date_min_temp', 'date_max_temp', 'max_temp', 'min_temp', 'AbsolutePressure', 'time_utc']
+skiplistmod=['_id','station_name','date_setup','last_setup','type','last_status_store','module_name','firmware','last_message', 'last_seen', 'battery_vp','last_upgrade','co2_calibrating', 'data_type', 'place', 'home_id', 'home_name','dashboard_data', 'modules','reachable']
+skiplistdsh=['temp_trend', 'pressure_trend', 'date_min_temp', 'date_max_temp', 'max_temp', 'min_temp', 'AbsolutePressure', 'time_utc','sum_rain_1','sum_rain_24']
 
 # these keys are outside
-outsidelist=['Rain']
+outsidelist=['Rain','Wind']
 
 
 # pass data to InfluxDB
-def send_data(ds):
-    write_api = client.write_api(write_options=SYNCHRONOUS)
-    
+def send_data(ds):    
     senddata={}
     dd=ds['dashboard_data']
+    time = dd['time_utc']
+    timeOut = datetime.datetime.fromtimestamp(time).strftime("%Y-%m-%dT%H:%M:%SZ") 
+
+    # pass module data
+    for key in ds:
+        if key in skiplistmod:
+            if debug and showraw:
+                print ( "Skipped: "+key )
+            continue
+
+        if key == 'battery_percent':
+            measurement="Battery"
+            time=ds['last_seen']
+        
+        if key == "rf_status":
+            measurement="Signal"
+            time=ds['last_seen']
+
+        if key == "wifi_status":
+            measurement="Signal"
+            time=ds['last_status_store']
+
+        timeOut = datetime.datetime.fromtimestamp(time).strftime("%Y-%m-%dT%H:%M:%SZ") 
+
+        senddata["measurement"]=measurement
+        senddata["time"]=timeOut
+        senddata["tags"]={}
+        senddata["tags"]["source"]="Netatmo"
+        senddata["tags"]["host"]=ds['module_name']
+        senddata["tags"]["module"]=ds['_id']
+        senddata["fields"]={}
+        senddata["fields"]["value"]=ds[key]
+        if debug:
+            print ("INFLUX: "+influxdb2_bucket)
+            print (json.dumps(senddata,indent=4))
+        write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
+
+    # pass dashboard_data
     for key in dd:
-        if key in skiplist:
-            if debug:
-                print ( "Skipped "+key )
+        if key in skiplistdsh:
+            if debug and showraw:
+                print ( "Skipped: "+key )
             continue
 
         if key in keylist:
@@ -85,30 +124,22 @@ def send_data(ds):
         else:
             value=dd[key]    
    
-        if key in outsidelist:
-            host = "Outside"
-        else:
-            host = ds['module_name']
-
-        time = datetime.datetime.fromtimestamp(dd['time_utc']).strftime("%Y-%m-%dT%H:%M:%SZ")
-
         senddata["measurement"]=key
-        senddata["time"]=time
+        senddata["time"]=timeOut
         senddata["tags"]={}
         senddata["tags"]["source"]="Netatmo"
-        senddata["tags"]["host"]=host
+        senddata["tags"]["host"]=ds['module_name']
         senddata["tags"]["module"]=ds['_id']
         senddata["fields"]={}
         senddata["fields"]["value"]=value
         if debug:
-             print (json.dumps(senddata,indent=4))
+            print ("INFLUX: "+influxdb2_bucket)
+            print (json.dumps(senddata,indent=4))
         write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
 
 
 # pass stations
 for station_id in devList.stations:
-    if debug:
-        print ( "\ntype: Station" )
     ds=devList.stationById(station_id)
     if ds is None:
         continue
@@ -116,21 +147,25 @@ for station_id in devList.stations:
         continue
     if debug:
         if 'station_name' in ds:
-            print ("name: "+ds['station_name'])
+            print ("\nStation: "+ds['station_name']+" - "+station_id)
         else:
-            print ("id: "+station_id)
+            print ("\nStation: "+station_id)
+        if showraw:
+            print ("RAW:")
+            print (json.dumps(ds,indent=4))
+
+    write_api = client.write_api(write_options=SYNCHRONOUS)
     send_data(ds)
 
 
 # pass modules
 for name in devList.modulesNamesList():
-    if debug:
-        print ( "\ntype: Module" )
     ds=devList.moduleByName(name)
     if ds is None:
         continue
     if not 'dashboard_data' in ds:
         continue
     if debug:
-        print ( "  id: "+ds['_id'])
+        print ( "\nModule: "+ds['module_name']+" - "+ds['_id'])
+
     send_data(ds)
