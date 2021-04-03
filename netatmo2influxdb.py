@@ -12,7 +12,7 @@ import sys
 import requests
 
 
-# debug enviroment varable
+# debug enviroment variables
 showraw = False
 debug_str=os.getenv("DEBUG", None)
 if debug_str is not None:
@@ -21,14 +21,14 @@ else:
     debug = False
 
 
-# netatmo envionment variables
+# netatmo environment variables
 netatmo_clientId=os.getenv('NETATMO_CLIENT_ID', "")
 netatmo_clientSecret=os.getenv('NETATMO_CLIENT_SECRET', "")
 netatmo_username=os.getenv('NETATMO_USERNAME')
 netatmo_password=os.getenv('NETATMO_PASSWORD')
 
 
-# influxDBv2 envionment variables
+# influxDBv2 environment variables
 influxdb2_host=os.getenv('INFLUXDB2_HOST', "localhost")
 influxdb2_port=int(os.getenv('INFLUXDB2_PORT', "8086"))
 influxdb2_org=os.getenv('INFLUXDB2_ORG', "org")
@@ -36,7 +36,7 @@ influxdb2_token=os.getenv('INFLUXDB2_TOKEN', "token")
 influxdb2_bucket=os.getenv('INFLUXDB2_BUCKET', "netatmo")
 
 
-# hard encoded envionment varables
+# hard encoded environment variables
 
 
 # report debug status
