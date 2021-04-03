@@ -3,7 +3,7 @@ Fetch data from the Netatmo API and place it in your influxdb. Based on turbosnu
 
 Updated for InfluxDBv2. Added upload of signal strength and battery percentage.
 
-## How to obtain Netatmo API Token
+## Netatmo API Token
 - Go to: https://dev.netatmo.com/
 - Log in.
 - Go to "My Apps"
@@ -14,13 +14,9 @@ Updated for InfluxDBv2. Added upload of signal strength and battery percentage.
 
 ## InfluxDBv2 Setup
 
-Assumes the following is already done:
-- Setup InfluxDBv2
-- Create Org
-- Create Bucket
-- Got Token
+Setup InfluxDBv2, create bucket and create a totken with write permissions for said bucket.
 
-## How to run
+## Docker Setup
 ```
 $ docker run -d \
  -e NETATMO_CLIENT_ID="<NETATMO CLIENT ID>" \
