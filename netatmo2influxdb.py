@@ -129,7 +129,7 @@ def send_data(ds):
         senddata["tags"]={}
         senddata["tags"]["source"]="Netatmo"
         senddata["tags"]["host"]=ds['module_name']
-        senddata["tags"]["module"]=ds['_id']
+        senddata["tags"]["hardware"]=ds['_id']
         senddata["fields"]={}
         senddata["fields"]["value"]=value
         if debug:
