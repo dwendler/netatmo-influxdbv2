@@ -86,15 +86,15 @@ def send_data(ds):
             continue
 
         if key == 'battery_percent':
-            measurement="Battery"
+            measurement="battery"
             time=ds['last_seen']
         
         if key == "rf_status":
-            measurement="Signal"
+            measurement="signal"
             time=ds['last_seen']
 
         if key == "wifi_status":
-            measurement="Signal"
+            measurement="signal"
             time=ds['last_status_store']
 
         timeOut = datetime.datetime.fromtimestamp(time).strftime("%Y-%m-%dT%H:%M:%SZ") 
@@ -124,7 +124,7 @@ def send_data(ds):
         else:
             value=dd[key]    
    
-        senddata["measurement"]=key
+        senddata["measurement"]=key.lower()
         senddata["time"]=timeOut
         senddata["tags"]={}
         senddata["tags"]["source"]="Netatmo"
