@@ -97,6 +97,23 @@ def send_data(ds):
             measurement="signal"
             time=ds['last_status_store']
 
+            
+        if key == "temperature":
+            value="temp"
+
+        if key == "pressure":
+            value="mbar"
+
+        if key == "noise":
+            value="dB"
+
+        if key == "rain":
+            value="mm"
+
+        if key in ('humidity', 'battery', 'rf_signal', 'wifi_status'):
+            value="percent"
+
+
         timeOut = datetime.datetime.fromtimestamp(time).strftime("%Y-%m-%dT%H:%M:%SZ") 
 
         senddata["measurement"]=measurement
@@ -106,7 +123,7 @@ def send_data(ds):
         senddata["tags"]["host"]=ds['module_name']
         senddata["tags"]["hardware"]=ds['_id']
         senddata["fields"]={}
-        senddata["fields"]["value"]=ds[key]
+        senddata["fields"][value]=ds[key]
         if debug:
             print ("INFLUX: "+influxdb2_bucket)
             print (json.dumps(senddata,indent=4))
