@@ -102,7 +102,8 @@ def send_data(ds):
         senddata["measurement"]=measurement
         senddata["time"]=timeOut
         senddata["tags"]={}
-        senddata["tags"]["source"]="Netatmo"
+        senddata["tags"]["source"]="docker netatmo-influxdbv2"
+        senddata["tags"]["origin"]="Netatmo"
         senddata["tags"]["host"]=ds['module_name']
         senddata["tags"]["hardware"]=ds['_id']
         senddata["fields"]={}
@@ -127,7 +128,8 @@ def send_data(ds):
         senddata["measurement"]=key.lower()
         senddata["time"]=timeOut
         senddata["tags"]={}
-        senddata["tags"]["source"]="Netatmo"
+        senddata["tags"]["source"]="docker netatmo-influxdbv2"
+        senddata["tags"]["origin"]="Netatmo"
         senddata["tags"]["host"]=ds['module_name']
         senddata["tags"]["hardware"]=ds['_id']
         senddata["fields"]={}
