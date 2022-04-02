@@ -96,24 +96,7 @@ def send_data(ds):
         if key == "wifi_status":
             measurement="signal"
             time=ds['last_status_store']
-
             
-        if key == "temperature":
-            value="temp"
-
-        if key == "pressure":
-            value="mbar"
-
-        if key == "noise":
-            value="dB"
-
-        if key == "rain":
-            value="mm"
-
-        if key in ('humidity', 'battery', 'rf_signal', 'wifi_status'):
-            value="percent"
-
-
         timeOut = datetime.datetime.fromtimestamp(time).strftime("%Y-%m-%dT%H:%M:%SZ") 
 
         senddata["measurement"]=measurement
@@ -123,8 +106,7 @@ def send_data(ds):
         senddata["tags"]["host"]=ds['module_name']
         senddata["tags"]["hardware"]=ds['_id']
         senddata["fields"]={}
-        senddata["fields"]=value
-        senddata["fields"][value]=ds[key]
+        senddata["fields"]["percent"]=ds[key]
         if debug:
             print ("INFLUX: "+influxdb2_bucket)
             print (json.dumps(senddata,indent=4))
@@ -149,7 +131,28 @@ def send_data(ds):
         senddata["tags"]["host"]=ds['module_name']
         senddata["tags"]["hardware"]=ds['_id']
         senddata["fields"]={}
-        senddata["fields"]["value"]=value
+
+        if key == "Temperature":
+            senddata["fields"]["temp"]=value
+
+        if key == "Humidity":
+            senddata["fields"]["percent"]=value
+
+        if key == "rain":
+            senddata["fields"]["mm"]=value
+
+        if key == "CO2":
+            senddata["fields"]["ppm"]=value
+
+        if key == "Pressure":
+            senddata["fields"]["mbar"]=value
+
+        if key == "Noise":
+            senddata["fields"]["dB"]=value
+
+        if key == "Rain":
+            senddata["fields"]["mm"]=value
+  
         if debug:
             print ("INFLUX: "+influxdb2_bucket)
             print (json.dumps(senddata,indent=4))
