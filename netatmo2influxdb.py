@@ -123,6 +123,7 @@ def send_data(ds):
         senddata["tags"]["host"]=ds['module_name']
         senddata["tags"]["hardware"]=ds['_id']
         senddata["fields"]={}
+        senddata["fields"]=value
         senddata["fields"][value]=ds[key]
         if debug:
             print ("INFLUX: "+influxdb2_bucket)
