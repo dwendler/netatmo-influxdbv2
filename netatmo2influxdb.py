@@ -104,7 +104,7 @@ def send_data(ds):
         senddata["tags"]={}
         senddata["tags"]["source"]="docker netatmo-influxdbv2"
         senddata["tags"]["origin"]="Netatmo"
-        senddata["tags"]["host"]=ds['module_name']
+        senddata["tags"]["sensor"]=ds['module_name']
         senddata["tags"]["hardware"]=ds['_id']
         senddata["fields"]={}
         senddata["fields"]["percent"]=ds[key]
@@ -130,7 +130,7 @@ def send_data(ds):
         senddata["tags"]={}
         senddata["tags"]["source"]="docker netatmo-influxdbv2"
         senddata["tags"]["origin"]="Netatmo"
-        senddata["tags"]["host"]=ds['module_name']
+        senddata["tags"]["sensor"]=ds['module_name']
         senddata["tags"]["hardware"]=ds['_id']
         senddata["fields"]={}
 
