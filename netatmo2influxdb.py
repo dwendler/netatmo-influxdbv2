@@ -107,7 +107,7 @@ def send_data(ds):
         senddata["tags"]["sensor"]=ds['module_name']
         senddata["tags"]["hardware"]=ds['_id']
         senddata["fields"]={}
-        senddata["fields"]["percent"]=ds[key]
+        senddata["fields"]["percent"]=float(ds[key])
         if debug:
             print ("INFLUX: "+influxdb2_bucket)
             print (json.dumps(senddata,indent=4))
