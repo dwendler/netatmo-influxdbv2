@@ -140,9 +140,6 @@ def send_data(ds):
         if key == "Humidity":
             senddata["fields"]["percent"]=value
 
-        if key == "rain":
-            senddata["fields"]["mm"]=value
-
         if key == "CO2":
             senddata["fields"]["ppm"]=value
 
