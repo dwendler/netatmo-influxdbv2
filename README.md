@@ -17,6 +17,7 @@ Updated for InfluxDBv2. Added upload of signal strength and battery percentage.
 Setup InfluxDBv2, create bucket and create a totken with write permissions for said bucket.
 
 ## Docker Setup
+https://hub.docker.com/repository/docker/dbsqp/netatmo-influxdbv2
 ```
 $ docker run -d \
  -e NETATMO_CLIENT_ID="<NETATMO CLIENT ID>" \
