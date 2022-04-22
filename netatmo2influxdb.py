@@ -107,7 +107,7 @@ def send_data(ds):
         senddata["tags"]["sensor"]=ds['module_name']
         senddata["tags"]["hardware"]=ds['_id']
         senddata["fields"]={}
-        senddata["fields"]["percent"]=float(ds[key])
+        senddata["fields"]["percent"]=round(float(ds[key]),2)
         if debug:
             print ("INFLUX: "+influxdb2_bucket)
             print (json.dumps(senddata,indent=4))
@@ -120,10 +120,10 @@ def send_data(ds):
                 print ( "Skipped: "+key )
             continue
 
-        if key in keylist:
-            value=float(dd[key])
-        else:
-            value=dd[key]    
+        #if key in keylist:
+        value=round(float(dd[key]),2)
+        #else:
+        #    value=dd[key]    
    
         senddata["measurement"]=key.lower()
         senddata["time"]=timeOut
