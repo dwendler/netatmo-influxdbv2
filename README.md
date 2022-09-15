@@ -33,7 +33,12 @@ $ docker run -d \
 dbsqp/netatmo-influxdbv2:latest
 ```
 
-## Debug
+# Options
+```
+ -e INFLUXDB2_SSL="true"
+```
+
+# Debug
 To report out further details in the log enable debug:
 ```
  -e DEBUG="true"
