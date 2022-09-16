@@ -55,6 +55,14 @@ if debug:
     print ( " debug: TRUE" )
 else:
     print ( " debug: FALSE" )
+if influxdb2_ssl:
+    print ( "   SSL: TRUE" )
+else:
+    print ( "   SSL: FALSE" )
+if influxdb2_ssl_verify:
+    print ( "verify: TRUE" )
+else:
+    print ( "verify: FALSE" )
 
 
 # netatmo
@@ -72,8 +80,15 @@ if debug:
     print ( "influx: "+influxdb2_url )
     print ( "bucket: "+influxdb2_bucket )
 
-client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_org, verify_ssl=influxdb2_ssl_verify)
-
+if influxdb2_ssl_verify:
+    if debug:
+        print ( "verify: True" )
+    client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_org, verify_ssl=True)
+else:
+    if debug:
+        print ( "verify: False" )
+    client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_org, verify_ssl=False)
+    
 
 # these keys are float
 keylist=['Temperature', 'min_temp', 'max_temp', 'Pressure', 'AbsolutePressure', 'Rain', 'sum_rain_24', 'sum_rain_1']
@@ -126,7 +141,7 @@ def send_data(ds):
         if debug:
             print ("INFLUX: "+influxdb2_bucket)
             print (json.dumps(senddata,indent=4))
-        write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, verify_ssl=influxdb2_ssl_verify, record=[senddata])
+        write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
 
     # pass dashboard_data
     for key in dd:
@@ -170,7 +185,7 @@ def send_data(ds):
         if debug:
             print ("INFLUX: "+influxdb2_bucket)
             print (json.dumps(senddata,indent=4))
-        write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, verify_ssl=influxdb2_ssl_verify, record=[senddata])
+        write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
 
 
 # pass stations
