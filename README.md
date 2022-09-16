@@ -36,6 +36,7 @@ dbsqp/netatmo-influxdbv2:latest
 # Options
 ```
  -e INFLUXDB2_SSL="true"
+ -e INFLUXDB2_SSL_VERIFY="TRUE"
 ```
 
 # Debug
