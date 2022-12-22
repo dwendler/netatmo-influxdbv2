@@ -155,7 +155,11 @@ def send_data(ds):
         #else:
         #    value=dd[key]    
    
-        senddata["measurement"]=key.lower()
+        if ds['module_name'] == "Wind":
+            senddata["measurement"]="wind"
+        else:
+            senddata["measurement"]=key.lower()
+   
         senddata["time"]=timeOut
         senddata["tags"]={}
         senddata["tags"]["source"]="docker netatmo-influxdbv2"
@@ -183,19 +187,19 @@ def send_data(ds):
             senddata["fields"]["mm"]=value
   
         if key == "WindStrength":
-            senddata["fields"]["kmh"]=value
-            senddata["tags"]["type"]="avg"
+            senddata["fields"]["speed"]=value
+            senddata["tags"]["type"]="general"
             
         if key == "WindAngle":
-            senddata["fields"]["deg"]=value
-            senddata["tags"]["type"]="avg"
+            senddata["fields"]["direction"]=value
+            senddata["tags"]["type"]="general"
             
         if key == "GustStrength":
-            senddata["fields"]["kmh"]=value
+            senddata["fields"]["speed"]=value
             senddata["tags"]["type"]="gust"
             
         if key == "GustAngle":
-            senddata["fields"]["deg"]=value
+            senddata["fields"]["direction"]=value
             senddata["tags"]["type"]="gust"
 
         if debug:
