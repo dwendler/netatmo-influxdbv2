@@ -95,7 +95,7 @@ keylist=['Temperature', 'min_temp', 'max_temp', 'Pressure', 'AbsolutePressure', 
 
 # these keys are skipped
 skiplistmod=['_id','station_name','date_setup','last_setup','type','last_status_store','module_name','firmware','last_message', 'last_seen', 'battery_vp','last_upgrade','co2_calibrating', 'data_type', 'place', 'home_id', 'home_name','dashboard_data', 'modules','reachable']
-skiplistdsh=['temp_trend', 'pressure_trend', 'date_min_temp', 'date_max_temp', 'max_temp', 'min_temp', 'AbsolutePressure', 'time_utc','sum_rain_1','sum_rain_24']
+skiplistdsh=['temp_trend', 'pressure_trend', 'date_min_temp', 'date_max_temp', 'max_temp', 'min_temp', 'AbsolutePressure', 'time_utc','sum_rain_1','sum_rain_24','max_wind_str','max_wind_angle','date_max_wind_str']
 
 # these keys are outside
 outsidelist=['Rain','Wind']
@@ -182,11 +182,26 @@ def send_data(ds):
         if key == "Rain":
             senddata["fields"]["mm"]=value
   
+        if key == "WindStrength":
+            senddata["fields"]["kmh"]=value
+            senddata["tags"]["type"]="avg"
+            
+        if key == "WindAngle":
+            senddata["fields"]["deg"]=value
+            senddata["tags"]["type"]="avg"
+            
+        if key == "GustStrength":
+            senddata["fields"]["kmh"]=value
+            senddata["tags"]["type"]="gust"
+            
+        if key == "GustAngle":
+            senddata["fields"]["deg"]=value
+            senddata["tags"]["type"]="gust"
+
         if debug:
             print ("INFLUX: "+influxdb2_bucket)
             print (json.dumps(senddata,indent=4))
         write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
-
 
 # pass stations
 for station_id in devList.stations:
