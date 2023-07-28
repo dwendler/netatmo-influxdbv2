@@ -24,7 +24,7 @@ else:
 # netatmo environment variables
 netatmo_clientId=os.getenv('NETATMO_CLIENT_ID', "")
 netatmo_clientSecret=os.getenv('NETATMO_CLIENT_SECRET', "")
-netatmo_token=os.getenv('NETATMO_TOKEN')
+netatmo_token=os.getenv('NETATMO_TOKEN',"")
 
 
 # influxDBv2 environment variables
