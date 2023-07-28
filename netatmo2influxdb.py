@@ -65,7 +65,13 @@ else:
 
 
 # netatmo
-authorization = lnetatmo.ClientAuth(clientId=netatmo_clientId, clientSecret=netatmo_clientSecret, refreshToken=netatmo_token)
+cred = {                          
+    "CLIENT_ID" :  netatmo_clientId,         
+    "CLIENT_SECRET" : netatmo_clientSecret,     
+    "REFRESH_TOKEN" : netatmo_token      
+}
+
+authorization = lnetatmo.ClientAuth()
 devList = lnetatmo.WeatherStationData(authorization)
 
 
