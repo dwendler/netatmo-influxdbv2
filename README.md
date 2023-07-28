@@ -1,5 +1,5 @@
 # netatmo-influxdbv2
-Docker image to fetch data from the Netatmo API and place it in your influxdb. Based on turbosnute's [netatmo-influxdb](https://github.com/turbosnute/netatmo-influxdb), Manabuishii's [docker-netatmo-influxdb-python](https://github.com/manabuishii/docker-netatmo-influxdb-python),  and [netatmo2influxdb.py](https://pypi.org/project/netatmo2influxdb/).
+Docker image to fetch data from the Netatmo API and place it in your influxdb. Based on turbosnute's [netatmo-influxdb](https://github.com/turbosnute/netatmo-influxdb), Manabuishii's [docker-netatmo-influxdb-python](https://github.com/manabuishii/docker-netatmo-influxdb-python), and [netatmo2influxdb.py](https://pypi.org/project/netatmo2influxdb/). All use [lnetatmo] (https://github.com/philippelt/netatmo-api-python).
 
 Updated for InfluxDBv2. Added upload of signal strength and battery percentage.
 
