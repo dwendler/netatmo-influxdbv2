@@ -4,15 +4,15 @@ Docker image to fetch data from the Netatmo API and place it in your influxdb. B
 Updated for InfluxDBv2. Added upload of signal strength and battery percentage.
 
 ## Netatmo API Token
-- Go to: https://dev.netatmo.com/
-- Log in.
-- Go to "My Apps"
-- Click "Create"
-- Write in the info...
-- Click "Save"
-- See your client id and client secret
-- Create token pair for scope of wheather station
-- See you authorisation and refresh token
+1. Go to: https://dev.netatmo.com/
+2. Log in.
+3. Go to "My Apps"
+4. Click "Create"
+4. Fill out info...
+5. Click "Save"
+6. Get your client id and client secret
+7. Generate token with scope read_station
+8. Get your refresh token
 
 ## InfluxDBv2 Setup
 
@@ -45,3 +45,5 @@ To report out further details in the log enable debug:
 ```
  -e DEBUG="true"
 ```
+# Status
+Note currently broken due to netatmo api change to oauth and update of lnetatmo.
