@@ -88,8 +88,8 @@ devList = lnetatmo.WeatherStationData(authorization)
 
 if debug:
     print ("Current temperature (inside/outside): %s / %s °C" %
-        ( devList.lastData()['internal']['Temperature'],
-          devList.lastData()['external']['Temperature'])
+        ( devList.lastData()['Living Room']['Temperature'],
+          devList.lastData()['Outside']['Temperature'])
           )
 
 
