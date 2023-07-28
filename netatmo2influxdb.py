@@ -71,6 +71,11 @@ cred = {
     "REFRESH_TOKEN" : netatmo_token      
 }
 
+if debug:
+    print ( "cred CLIENT_ID: "+getParameter("CLIENT_ID", cred) )
+    print ( "cred CLIENT_SECRET: "+getParameter("CLIENT_SECRET", cred) )
+    print ( "cred REFRESH_TOKEN: "+getParameter("REFRESH_TOKEN", cred) )
+
 authorization = lnetatmo.ClientAuth()
 devList = lnetatmo.WeatherStationData(authorization)
 
