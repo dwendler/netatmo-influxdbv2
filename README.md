@@ -10,7 +10,9 @@ Updated for InfluxDBv2. Added upload of signal strength and battery percentage.
 - Click "Create"
 - Write in the info...
 - Click "Save"
-- See your client id and client secret.
+- See your client id and client secret
+- Create token pair for scope of wheather station
+- See you authorisation and refresh token
 
 ## InfluxDBv2 Setup
 
@@ -22,8 +24,7 @@ https://hub.docker.com/repository/docker/dbsqp/netatmo-influxdbv2
 $ docker run -d \
  -e NETATMO_CLIENT_ID="<NETATMO CLIENT ID>" \
  -e NETATMO_CLIENT_SECRET="<NETATMO CLIENT SECRET>" \
- -e NETATMO_USERNAME="<NETATMO USERNAME>" \
- -e NETATMO_PASSWORD="<NETATMO PASSWORD>" \
+ -e NETATMO_TOKEN="<NETATMO REFRESH TOKEN>" \
  -e INFLUXDB2_HOST="<INFLUXDBv2 SERVER>" \
  -e INFLUXDB2_PORT="8086" \
  -e INFLUXDB2_ORG="Home" \
