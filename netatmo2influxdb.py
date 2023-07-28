@@ -24,7 +24,6 @@ else:
 # netatmo environment variables
 netatmo_clientId=os.getenv('NETATMO_CLIENT_ID', "")
 netatmo_clientSecret=os.getenv('NETATMO_CLIENT_SECRET', "")
-
 netatmo_token=os.getenv('NETATMO_TOKEN')
 
 
@@ -66,7 +65,6 @@ else:
 
 
 # netatmo
-#authorization = lnetatmo.ClientAuth(clientId=netatmo_clientId, clientSecret=netatmo_clientSecret, username=netatmo_username, password=netatmo_password)
 authorization = lnetatmo.ClientAuth(clientId=netatmo_clientId, clientSecret=netatmo_clientSecret, refreshToken=netatmo_token)
 devList = lnetatmo.WeatherStationData(authorization)
 
