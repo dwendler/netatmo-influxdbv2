@@ -8,6 +8,7 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 import json
 import lnetatmo
 import os
+from os import getenv
 import sys
 import requests
 
