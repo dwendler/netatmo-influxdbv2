@@ -71,6 +71,9 @@ cred = {
     "REFRESH_TOKEN" : netatmo_token      
 }
 
+def getParameter(key, default):
+    return getenv(key, default[key])
+
 if debug:
     print ( "cred CLIENT_ID: "+getParameter("CLIENT_ID", cred) )
     print ( "cred CLIENT_SECRET: "+getParameter("CLIENT_SECRET", cred) )
