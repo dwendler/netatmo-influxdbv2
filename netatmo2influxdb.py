@@ -49,7 +49,6 @@ else:
     
 # hard encoded environment variables
 
-
 # report debug status
 if debug:
     print ( " debug: TRUE" )
@@ -64,17 +63,19 @@ if influxdb2_ssl_verify:
 else:
     print ( "verify: FALSE" )
 
+<<<<<<< HEAD
 
 # netatmo
+=======
+#authorization = lnetatmo.ClientAuth()
+>>>>>>> 8493146 (message)
 authorization = lnetatmo.ClientAuth( clientId=netatmo_clientId, clientSecret=netatmo_clientSecret, refreshToken=netatmo_token )
-devList = lnetatmo.WeatherStationData(authorization)
 
 if debug:
     print ("Current temperature (inside/outside): %s / %s °C" %
         ( devList.lastData()['Living Room']['Temperature'],
           devList.lastData()['Outside']['Temperature'])
           )
-
 
 # influxDBv2
 if influxdb2_ssl_str:
