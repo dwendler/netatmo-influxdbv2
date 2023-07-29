@@ -53,7 +53,7 @@ else:
 if debug:
     print ( " debug: TRUE" )
 else:
-    print ( " debug: FALSE" )
+    print ( " debug: FALSE" )    
 if influxdb2_ssl:
     print ( "   SSL: TRUE" )
 else:
@@ -87,7 +87,7 @@ else:
     if debug:
         print ( "verify: False" )
     client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_org, verify_ssl=False)
-    
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # these keys are float
 keylist=['Temperature', 'min_temp', 'max_temp', 'Pressure', 'AbsolutePressure', 'Rain', 'sum_rain_24', 'sum_rain_1']
