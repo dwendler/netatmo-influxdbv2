@@ -68,12 +68,6 @@ else:
 authorization = lnetatmo.ClientAuth( clientId=netatmo_clientId, clientSecret=netatmo_clientSecret, refreshToken=netatmo_token )
 devList = lnetatmo.WeatherStationData(authorization)
 
-if debug:
-    print ("Current temperature (inside/outside): %s / %s °C" %
-        ( devList.lastData()['Living Room']['Temperature'],
-          devList.lastData()['Outside']['Temperature'])
-          )
-    quit()
 
 # influxDBv2
 if influxdb2_ssl_str:
