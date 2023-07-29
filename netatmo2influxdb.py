@@ -66,23 +66,6 @@ else:
 
 
 # netatmo
-
-#cred = {                          
-#    "CLIENT_ID" :  netatmo_clientId,         
-#    "CLIENT_SECRET" : netatmo_clientSecret,     
-#    "REFRESH_TOKEN" : netatmo_token      
-#}
-#
-#def getParameter(key, default):
-#    return getenv(key, default[key])
-#
-#if debug:
-#    print ( "cred CLIENT_ID: "+getParameter("CLIENT_ID", cred) )
-#    print ( "cred CLIENT_SECRET: "+getParameter("CLIENT_SECRET", cred) )
-#    print ( "cred REFRESH_TOKEN: "+getParameter("REFRESH_TOKEN", cred) )
-#
-#authorization = lnetatmo.ClientAuth()
-
 authorization = lnetatmo.ClientAuth( clientId=netatmo_clientId, clientSecret=netatmo_clientSecret, refreshToken=netatmo_token )
 devList = lnetatmo.WeatherStationData(authorization)
 
