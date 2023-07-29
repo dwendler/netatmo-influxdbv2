@@ -47,7 +47,7 @@ if influxdb2_ssl_verify_str is not None:
 else:
     influxdb2_ssl_verify = False
     
-# hard encoded environment variables
+# hard encoded environment variables!
 
 # report debug status
 if debug:
