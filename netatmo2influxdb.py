@@ -63,12 +63,8 @@ if influxdb2_ssl_verify:
 else:
     print ( "verify: FALSE" )
 
-<<<<<<< HEAD
 
 # netatmo
-=======
-#authorization = lnetatmo.ClientAuth()
->>>>>>> 8493146 (message)
 authorization = lnetatmo.ClientAuth( clientId=netatmo_clientId, clientSecret=netatmo_clientSecret, refreshToken=netatmo_token )
 
 if debug:
