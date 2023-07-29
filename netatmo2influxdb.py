@@ -206,28 +206,29 @@ def send_data(ds):
             print (json.dumps(senddata,indent=4))
         write_api.write(bucket=influxdb2_bucket, org=influxdb2_org, record=[senddata])
 
-# pass stations
-for station_id in devList.stations:
-    ds=devList.stationById(station_id)
-    if ds is None:
-        continue
-    if not 'dashboard_data' in ds:
-        continue
-    if debug:
-        if 'station_name' in ds:
-            print ("\nStation: "+ds['station_name']+" - "+station_id)
-        else:
-            print ("\nStation: "+station_id)
-        if showraw:
-            print ("RAW:")
-            print (json.dumps(ds,indent=4))
 
-    write_api = client.write_api(write_options=SYNCHRONOUS)
-    send_data(ds)
+# pass default station
+ds=devList.stationByName(devList.default_station)
+
+if ds is None:
+    print ("NONE")
+if not 'dashboard_data' in ds:
+    print ("NO DASHBOARD DATA")
+if debug:
+    if 'station_name' in ds:
+        print ("\nStation: "+ds['station_name']+" - "+ds['_id'])
+    else:
+        print ("\nStation: "+ds['_id'])
+    if showraw:
+        print ("RAW:")
+        print (json.dumps(ds,indent=4))
+
+write_api = client.write_api(write_options=SYNCHRONOUS)
+send_data(ds)
 
 
 # pass modules
-for name in devList.modulesNamesList():
+for name in devList.modulesNamesList( station='devList.default_station' ):
     ds=devList.moduleByName(name)
     if ds is None:
         continue
