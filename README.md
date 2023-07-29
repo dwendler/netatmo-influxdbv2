@@ -46,4 +46,4 @@ To report out further details in the log enable debug:
  -e DEBUG="true"
 ```
 # Status
-Note currently broken due to netatmo api change to oauth and update of lnetatmo.
+Updated for lnetatmo oauth.
