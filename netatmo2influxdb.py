@@ -11,6 +11,9 @@ import os
 from os import getenv
 import sys
 import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 # debug enviroment variables
@@ -87,7 +90,6 @@ else:
     if debug:
         print ( "verify: False" )
     client = InfluxDBClient(url=influxdb2_url, token=influxdb2_token, org=influxdb2_org, verify_ssl=False)
-    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # these keys are float
 keylist=['Temperature', 'min_temp', 'max_temp', 'Pressure', 'AbsolutePressure', 'Rain', 'sum_rain_24', 'sum_rain_1']
