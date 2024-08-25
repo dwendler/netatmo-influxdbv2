@@ -8,11 +8,11 @@ do
   RET=$?
   if [ ${RET} -ne 0 ];
   then
-    echo "Exit status not 0"
-    echo "Sleep 120"
-    sleep 120
+    echo "Exit status not 0 - waiting for one minute"
+    echo "Sleep 60"
+    sleep 60
   fi
   date
-  echo "Sleep 60"
-  sleep 60
+  echo "query Netatmo API in 15 minutes again"
+  sleep 900
 done
